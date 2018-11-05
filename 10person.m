@@ -16,14 +16,13 @@ for i=1:10
     X(i,:)=training_set(i,:)-Mean; % X is an M*N matrix, every row stands for every picture - meanpicture
     
 end
+
 figure; %Average face
 subplot(1,2,1),imshow(mat2gray(reshape(Mean,192,168))); title('Mean');  %Average face 
-subplot(1,2,2),imshow(mat2gray(reshape(X(1,:),192,168))); title('S1P1-Mean');
-
+subplot(1,2,2),imshow(mat2gray(reshape(X(640,:),192,168))); title('A1-Mean');
 
 for n=1:10
 
         eval(['a',num2str(n),'=','training_set(n:65:650,:,:)',';']);
 
 end
-
