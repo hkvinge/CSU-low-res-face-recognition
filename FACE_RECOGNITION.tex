@@ -1,0 +1,309 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File name: US-MexCategorification2016.tex
+% Poster name: Khovanov's Heisenberg category and the asymptotic representation theory of symmetric groups
+% 
+%
+% Created by: Henry Kvinge
+% Based on a template by:
+% Computational Physics and Biophysics Group, Jacobs University
+% https://teamwork.jacobs-university.de:8443/confluence/display/CoPandBiG/LaTeX+Poster
+% 
+% Further modified by:
+% Nathaniel Johnston (nathaniel@njohnston.ca)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[final]{beamer}
+\usepackage[scale=1.24]{beamerposter} % Use the beamerposter package for laying out the poster
+\usepackage{spinHeisenCenterMACROS, multicol, xcolor, tikz, dsfont,mathabx,mathtools}
+\usepackage{multicol}
+\usepackage{graphicx}
+
+\usetheme{confposter} % Use the confposter theme supplied with this template
+
+
+\setbeamercolor{block title}{fg=ngreen,bg=white} % Colors of the block titles
+\setbeamercolor{block body}{fg=black,bg=white} % Colors of the body of blocks
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70} % Colors of the highlighted block titles
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10} % Colors of the body of highlighted blocks
+% Many more colors are available for use in beamerthemeconfposter.sty
+
+%-----------------------------------------------------------
+% Define the column widths and overall poster size
+% To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*sepwid)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+sepwid = 0.464
+% Set threecolwid to be (3*onecolwid)+2*sepwid = 0.708
+
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\middlecolwid}
+\setlength{\paperwidth}{48in} % A0 width: 46.8in
+\setlength{\paperheight}{36in} % A0 height: 33.1in
+\setlength{\sepwid}{0.024\paperwidth} % Separation width (white space) between columns
+\setlength{\onecolwid}{0.3413\paperwidth} % Width of one column
+\setlength{\middlecolwid}{0.22\paperwidth} % Width of two columns
+\setlength{\topmargin}{-0.5in} % Reduce the top margin size
+%-----------------------------------------------------------
+
+%\usepackage{graphicx}  % Required for including images
+
+\usepackage{booktabs} % Top and bottom rules for tables
+
+%------------------------------- Tikz Related  ------------------------------------------------------------------------------------------
+
+\usetikzlibrary{decorations.pathreplacing,shapes}
+\usepackage{tikz}
+
+
+%picture of clockwise bubble
+\newcommand{\ckpicture}{
+\begin{tikzpicture}
+\draw[ultra thick] (0,0) circle (3cm);
+\node at (-3,0) {\arrowlines};
+\draw[fill=black] (-2.4,1.8) circle (.2cm);
+\node at (-3,2.9) {$k$};
+\end{tikzpicture}}
+
+%picture of counterclockwise bubble
+\newcommand{\ctildekpicture}{
+\begin{tikzpicture}
+\draw[ultra thick] (0,0) circle (3cm);
+\node[rotate = 180] at (-3,0) {\arrowlines};
+\draw[fill=black] (-2.4,1.8) circle (.2cm);
+\node at (-3,2.9) {$k$};
+\end{tikzpicture}}
+
+%----------------------------------------------------------------------------------------
+%	Omit command 
+%----------------------------------------------------------------------------------------
+
+\newcommand{\omitt}[1]{}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION 
+%----------------------------------------------------------------------------------------
+
+\title{Face Recognition via Principle Component Analysis} % Poster title
+
+\author{Author: Jingya Li, Yujia Chen Instructor: Henry Kvinge} % Author(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
+\addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
+
+\setlength{\belowcaptionskip}{2ex} % White space under figures
+\setlength\belowdisplayshortskip{2ex} % White space under equations
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+
+\begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % The first column
+
+%----------------------------------------------------------------------------------------
+%	Objective
+%----------------------------------------------------------------------------------------
+
+\setbeamercolor{block alerted title}{fg=black,bg=ngreen} % Change the alert block title colors
+\setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+\begin{alertblock}{Objective}
+Use PCA to reduce computational cost.
+\end{alertblock}
+
+\vspace{-4mm}
+
+%----------------------------------------------------------------------------------------
+%	Khovanov's Heisenberg category
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Introduction}
+The Euclidean distance is the simplest way for face recognition, which equal to the square of the corresponding coordinate difference in the two image matrix. Calculating the Euclidean distance for two n$\times$n matrix, which requires $n^2$ times subtraction and multiplication respectively. For example:
+\begin{figure}[h]
+\centering
+\includegraphics[width=.25\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/sample_img.png}
+\end{figure}
+Using Matlab to convert it into matrix, which is a 192$\times$168 matrix:\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=.3\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/sample_img_size.png}
+\end{figure}
+That is calculating the Euclidean distance for every two images in the sample space requires $192\times168=32256$ times multiplication and subtraction. Therefore, if the dimension of image matrix can be reduced without losing most of the information, the computation cost can be reduced and the recognition speed can be improved, which can be achieved by PCA (Principle Component Analysis).
+\end{block}
+
+\vspace{-5mm}
+
+%----------------------------------------------------------------------------------------
+%	Subalgebra of symmetric functions
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Mathematics of PCA}
+Suppose we have $M$ vectors of size $N$ representing a set of sampled images. $p_j$'s represent the pixel values.
+\begin{equation*}
+x_i = [p_1,p_2,...,p_{j=N}]^T,i=1,2,...,M
+\end{equation*}
+Let $m$ to be the mean of the images:\\
+\begin{equation*}
+m={1\over M}\sum_{i=1}^M x_i
+\end{equation*}
+And let $w_i$ be defined as the mean centered image:
+$$w_i = x_i - m$$
+Find a set of $e_i$'s have the largest projection onto each of $w_i$'s, $let $e_i$ is orthonormal to M:
+\begin{equation*}
+\lambda_i = {1\over M}\sum_{n=1}^M(e_i^T w_n)^2
+\end{equation*}
+The covariance matrix:\\
+ \begin{equation*}
+C=WW^T
+\end{equation*}
+where $W = [w_1,..,w_i]$.\\
+\end{block}
+
+\end{column} % End of the first column
+
+%--------------------------------------------------------------------------------------------
+%Break between first and second column
+%--------------------------------------------------------------------------------------------
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\middlecolwid} % Begin second column
+
+\begin{alertblock}{Main Result} 
+\begin{figure}[h]
+\centering
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/person1.png}
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/person2.png}
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/person3.png}
+\caption{ Faces from training set.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=.17\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/meanface.png}
+\caption{ The average face after mean centering.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/eigenperson1.png}
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/eigenperson2.png}
+\includegraphics[width=.18\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/eigenperson3.png}
+\caption{ The corresponded eigenfaces.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/testimage.png}
+\includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/recognized_image.png}
+\caption{ Test face vs. recognized face.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/img_mat.png}
+\includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/project_mat.png}
+\caption{ The reduction in computation.}
+As we introduced in the beginning, PCA reduced the computation from $32256\times60$ to $59\times 60$.
+\end{figure}
+\vspace{2mm}
+
+\end{alertblock}
+
+\vspace{-5mm}
+
+\begin{block}
+
+ 
+\begin{equation*}
+WW^T(Wd_i) =\mu_i(Wd_i)
+\end{equation*}
+\begin{equation*}
+\Omega = [v_1v_2...v_{M'}]^T
+\end{equation*}
+where $v_i=e_i^tw_i$. Hence the Euclidean distance:\\
+\begin{equation*}
+\epsilon_k = ||(\Omega - \Omega_k)||
+\end{equation*}
+where $\Omega_k$ is a vector describing the $k^{th}$ face class.
+\end{block}
+\end{column} % End of the second column
+
+%----------------------------------------------------------------------------------------
+%	Third column
+%----------------------------------------------------------------------------------------
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % Begin the third column
+
+%----------------------------------------------------------------------------------------
+%	Finishing shifted symmetric functions
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	Transition and co-transition measure
+%----------------------------------------------------------------------------------------
+
+\begin{block}{The Algorithm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=.8\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/FC.png}
+\caption{ The flow chart.}
+\begin{itemize}
+\item[i.] The feature extractor calculate eigenface and convert the significant information for each person to a column vector. 
+\item[ii.] The test image is also converted to a vector, through comparing with the eigenface vector, the vector with the minimum difference value is the person we need to find.
+
+\end{itemize}
+\end{figure}
+
+\end{block}
+
+\vspace{-8mm}
+
+\omitt{
+%----------------------------------------------------------------------------------------
+%	Acknowledgements
+%----------------------------------------------------------------------------------------
+
+\setbeamercolor{block title}{fg=red,bg=white} % Change the block title color
+
+\begin{block}{Acknowledgements}
+
+\end{block}
+
+\vspace{-8mm}}
+
+%----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+\begin{block}{References}
+http://vision.ucsd.edu/leekc/ExtYaleDatabase/ExtYaleB.html
+%\nocite{*} % Insert publications even if they are not cited in the poster
+%\small{\bibliographystyle{unsrt}
+\small{\bibliographystyle{amsplain}
+\bibliography{spinHeisenCenter}\vspace{0.5in}}
+
+\end{block}
+
+\end{column} % End the third column
+
+\end{columns} % End of all the columns in the poster
+
+\end{frame} % End of the enclosing frame
+
+\end{document}
