@@ -256,7 +256,9 @@ where
 
 \begin{block}
 
-In other words, we repeatedly extract the direction which captures the highest variance in the data. This both acts as a tool for dimensionality reduction and also feature extraction since it captures variation in the data in a very compact form.
+In other words, we repeatedly extract the direction which captures the highest variance in the data. This both acts as a tool for dimensionality reduction and also feature extraction since it efficiently captures variation in the data in a very compact form.
+
+Given a new image $v_i$ (which we treat as a vector) we can calculate the angle between $v_i$ and the subspace spanned by $e_1, e_2, \dots, e_\ell$ for small $\ell$. The size of this angle should efficiently indicate the similarity of the new image to the set $x_1, \dots, x_M$.
 
 \end{block}
 
