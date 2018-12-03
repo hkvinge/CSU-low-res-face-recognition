@@ -134,17 +134,17 @@ Use the singular value decomposition for a matrix to efficiently recognize human
 %----------------------------------------------------------------------------------------
 
 \begin{block}{Introduction}
-Euclidean distance is an obvious way to try and distinguish between different human faces. Calculating the Euclidean distance between two length $n^2$ vectors, requires $n^2$ subtractions and multiplications respectively. For example the image:
+Euclidean distance is an obvious way to try and distinguish between different human faces. Calculating the Euclidean distance between two length $kn$ vectors (corresponding to two $k \times n$ images), requires $\Big(kn\Big)^2$ subtractions and multiplications respectively. Using Matlab, the image:
 \begin{figure}[h]
 \centering
 \includegraphics[width=.25\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/sample_img.png}
 \end{figure}
-Using Matlab to convert it into matrix, which is a 192$\times$168 matrix:\\
+can be treated a 192$\times$168 matrix:\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=.3\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/sample_img_size.png}
 \end{figure}
-That is calculating the Euclidean distance for every two images in the sample space requires $192\times168=32256$ times multiplication and subtraction. Therefore, if the dimension of image matrix can be reduced without losing most of the information, the computation cost can be reduced and the recognition speed can be improved, which can be achieved by PCA (Principle Component Analysis).
+Thus calculating the Euclidean distance for any two images of these dimensions requires $192\times168=32256$ multiplications and subtractions. Therefore, if the important features of a large collection of images can be summarized by just a few images, the computation cost can be reduced and the recognition speed can be improved. This can be achieved by PCA (Principle Component Analysis).
 \end{block}
 
 \vspace{-5mm}
@@ -158,7 +158,7 @@ Suppose we have $M$ vectors of size $N$ representing a set of sampled images. $p
 \begin{equation*}
 x_i = [p_1,p_2,...,p_{j=N}]^T,i=1,2,...,M
 \end{equation*}
-Let $m$ to be the mean of the images:\\
+Let $m$ be the mean of the images:\\
 \begin{equation*}
 m={1\over M}\sum_{i=1}^M x_i
 \end{equation*}
@@ -264,8 +264,8 @@ where $\Omega_k$ is a vector describing the $k^{th}$ face class.
 \includegraphics[width=.8\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/FC.png}
 \caption{ The flow chart.}
 \begin{itemize}
-\item[i.] The feature extractor calculate eigenface and convert the significant information for each person to a column vector. 
-\item[ii.] The test image is also converted to a vector, through comparing with the eigenface vector, the vector with the minimum difference value is the person we need to find.
+\item[i.] The feature extractor calculates the eigenfaces thus converting discriminatory information for each persons face to a small set of column vectors. 
+\item[ii.] The test image is also converted to a vector, by comparing with a subset of the eigenface vectors for each person, we can predict which individual the test vector image corresponds to.
 
 \end{itemize}
 \end{figure}
