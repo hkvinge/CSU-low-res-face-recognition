@@ -166,7 +166,10 @@ and let $w_i$ be defined as the mean centered image corresponding to $x_i$:
 \begin{equation*}
 w_i = x_i - m.
 \end{equation*}
-Find a set of vectors $\Big\{e_i\Big\}$ which best capture the variance of $w_1, \dots, w_M$:
+Find a set of vectors $\Big\{e_i\Big\}$ which best capture the variance of $w_1, \dots, w_M$. Specifically set
+\begin{equation*}
+e_1 := \text{arg max}_{||e||=1} \Big(\sum_{i}^M \Big\langle w_i, e\Big\rangle^2 \Big)
+\end{equation*}
 \end{block}
 
 \end{column} % End of the first column
@@ -210,7 +213,7 @@ Find a set of vectors $\Big\{e_i\Big\}$ which best capture the variance of $w_1,
 \includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/img_mat.png}
 \includegraphics[width=.29\textwidth]{/Users/lijingya/Desktop/mathematics_project/pictures/project_mat.png}
 \caption{ The reduction in computation.}
-As we introduced in the beginning, by using PCA we were able to summarize the discriminatory features of a large collection of images of an individuals in just a few images.
+As we explained in the Introduction, by using PCA we were able to summarize the discriminatory features of a large collection of images of an individual in just a few images.
 \end{figure}
 \vspace{2mm}
 
@@ -221,14 +224,15 @@ As we introduced in the beginning, by using PCA we were able to summarize the di
 \begin{block}
 
 
+While in general 
 \begin{equation*}
-\lambda_i = {1\over M}\sum_{n=1}^M(e_i^T w_n)^2
+e_k = := \text{arg max}_{||e||=1} \Big(\sum_{i}^M \Big\langle \hat{w_i}, e\Big\rangle^2 \Big)
 \end{equation*}
-The covariance matrix:\\
- \begin{equation*}
-C=WW^T
+where 
+\begin{equation*}
+\hat{w_i} = w_i - \sum_{i =1}^{k-1} w_i e_i e_i^T.
 \end{equation*}
-where $W = [w_1,..,w_i]$.\\
+
 
 \end{block}
 \end{column} % End of the second column
@@ -252,15 +256,7 @@ where $W = [w_1,..,w_i]$.\\
 
 \begin{block}
 
-\begin{equation*}
-WW^T\Big(Wd_i\Big) =\mu_i\Big(Wd_i\Big) \quad
-\text{and} \quad \Omega = \Big[v_1v_2...v_{M'}\Big]^T
-\end{equation*}
-where $v_i=e_i^tw_i$. Hence the Euclidean distance:\\
-\begin{equation*}
-\epsilon_k = \Big|\Big|\Big(\Omega - \Omega_k\Big)\Big|\Big|
-\end{equation*}
-where $\Omega_k$ is a vector describing the $k^{th}$ face class.
+In other words, we repeatedly extract the direction which captures the highest variance in the data. This both acts as a tool for dimensionality reduction and also feature extraction since it captures variation in the data in a very compact form.
 
 \end{block}
 
